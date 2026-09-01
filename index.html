@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun! 🌸 Shedletsky & 1X1X1 Special Puzzle</title>
+    <meta name="description" content="Web ucapan ulang tahun interaktif bertema Girly Anime, Bunga Sakura, Shedletsky & 1X1X1 dari Forsaken Roblox. Susun puzzlenya dan buka kejutan spesial!">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fredoka:wght@400;600;700&family=Poppins:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <!-- Relative CSS Path for GitHub Pages -->
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="theme-sakura">
+    <!-- Interactive Background Canvas (Sakura petals & Sparkles) -->
+    <canvas id="bgCanvas"></canvas>
+    
+    <!-- Glitch Overlay FX for 1X1X1 Theme -->
+    <div id="glitchOverlay" class="glitch-overlay"></div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+        <!-- Navigation Header -->
+        <header class="app-header">
+            <div class="brand">
+                <span class="brand-icon">🎀</span>
+                <h1 class="brand-title">Birthday Surprise!</h1>
+            </div>
+            <div class="header-controls">
+                <button id="btnMusic" class="icon-btn" title="Putar Musik BGM" aria-label="Putar Musik BGM">
+                    <span id="musicIcon">🎵</span>
+                </button>
+                <button id="btnThemeToggle" class="icon-btn" title="Ganti Mode Tema" aria-label="Ganti Mode Tema">
+                    <span>✨</span>
+                </button>
+                <!-- Admin Lock Button -->
+                <button id="btnAdminTrigger" class="icon-btn icon-admin" title="Panel Admin (PIN Required)" aria-label="Panel Admin">
+                    <span>🔐</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Hero Header Banner -->
+            <section class="hero-banner">
+                <div class="badge-tag">🌸 SPECIAL BIRTHDAY EDITION 🌸</div>
+                <h2 class="hero-title">Hai <span id="displayRecipientName">Tuan Putri Ulang Tahun 💖</span>!</h2>
+                <p class="hero-subtitle">Shedletsky & 1X1X1 dari Forsaken Roblox menyiapkan kotak kejutan untukmu. Susun puzzlenya untuk membukanya!</p>
+            </section>
+
+            <!-- Puzzle Section Container -->
+            <section id="puzzleSection" class="puzzle-section card-glass">
+                <div class="section-header">
+                    <div class="puzzle-stats">
+                        <div class="stat-box">
+                            <span class="stat-label">Langkah:</span>
+                            <span id="moveCount" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Waktu:</span>
+                            <span id="timerText" class="stat-value">00:00</span>
+                        </div>
+                    </div>
+                    <div class="puzzle-actions">
+                        <button id="btnPreview" class="btn btn-secondary">🔍 Acuan Gambar</button>
+                        <button id="btnShuffle" class="btn btn-secondary">🔄 Acak Ulang</button>
+                        <button id="btnAutoSolve" class="btn btn-magic">✨ Bantu Selesaikan</button>
+                    </div>
+                </div>
+
+                <!-- Puzzle Board Grid -->
+                <div class="puzzle-board-wrapper">
+                    <div id="puzzleBoard" class="puzzle-board" role="region" aria-label="Papan Game Puzzle Ulang Tahun">
+                        <!-- Tiles generated dynamically via JavaScript -->
+                    </div>
+                </div>
+
+                <div class="puzzle-footer-hint">
+                    <p>💡 <em>Klik atau seret ubin puzzle untuk menukarkan posisinya!</em></p>
+                </div>
+            </section>
+
+            <!-- Gift Box Opening Reveal Section (Hidden initially) -->
+            <section id="giftRevealSection" class="gift-reveal-section card-glass hidden">
+                <div class="congratulations-header">
+                    <div class="confetti-burst-icon">🎉</div>
+                    <h2>PUZZLE BERHASIL DISUSUN!</h2>
+                    <p>Kotak Kejutan Spesial Siap Dibuka!</p>
+                </div>
+
+                <!-- 3D Gift Box Interactive Element -->
+                <div class="gift-box-wrapper">
+                    <div id="giftBox" class="gift-box pulse-glow">
+                        <div class="gift-lid">
+                            <div class="gift-bow">🎀</div>
+                        </div>
+                        <div class="gift-body">
+                            <div class="gift-ribbon-v"></div>
+                            <div class="gift-ribbon-h"></div>
+                            <div class="gift-glow-light"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btnOpenGift" class="btn btn-primary btn-sparkle">
+                    🎁 Buka Kotak Ucapan Spesial! 🎁
+                </button>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Made with 💖, 🌸 Sakura Petals, 🍗 Shedletsky & 🟩 1X1X1 Forsaken Roblox Theme</p>
+        </footer>
+    </div>
+
+    <!-- Modal: Acuan Gambar Puzzle -->
+    <div id="previewModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>🔍 Gambar Target Puzzle</h3>
+                <button id="btnClosePreview" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="preview-img-container">
+                    <svg id="previewSVG" viewBox="0 0 600 600" class="preview-svg-image">
+                        <!-- Rendered by JS -->
+                    </svg>
+                </div>
+                <p class="preview-caption">Shedletsky & 1X1X1 Merayakan Ulang Tahun dalam Suasana Bunga Sakura 🌸</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Card Surat Ucapan Ulang Tahun -->
+    <div id="greetingModal" class="modal-overlay hidden">
+        <div class="modal-card card-greeting">
+            <div class="greeting-envelope-decor">
+                <span class="envelope-stamp">💌</span>
+            </div>
+            <button id="btnCloseGreeting" class="close-btn">&times;</button>
+
+            <div class="greeting-content">
+                <div class="greeting-header">
+                    <span class="cute-badge">🌸 HAPPY BIRTHDAY 🌸</span>
+                    <h2 class="greeting-title">Selamat Ulang Tahun, <span id="cardRecipientName">Tuan Putri</span>! ✨</h2>
+                </div>
+
+                <!-- Interactive Artwork Canvas/SVG Banner -->
+                <div class="greeting-artwork-box">
+                    <div class="greeting-art-svg-wrapper" id="cardArtContainer">
+                        <!-- Inserted via SVG drawing -->
+                    </div>
+                </div>
+
+                <!-- Dynamic Typewriter Message Card -->
+                <div class="message-card-paper">
+                    <div class="paper-line-decor"></div>
+                    <div id="typewriterText" class="typewriter-text">
+                        <!-- Message animated typing here -->
+                    </div>
+                </div>
+
+                <!-- Interactive Character Badges / Easter Eggs -->
+                <div class="easter-egg-section">
+                    <p class="easter-egg-title">✨ Klik Karakter & Stiker untuk Efek Spesial: ✨</p>
+                    <div class="badge-grid">
+                        <button id="eeChicken" class="ee-badge" title="Shedletsky's Fried Chicken">
+                            <span class="badge-emoji">🍗</span>
+                            <span class="badge-text">Shedletsky's Chicken</span>
+                        </button>
+                        <button id="eeSword" class="ee-badge" title="Telamon Sword Slash">
+                            <span class="badge-emoji">⚔️</span>
+                            <span class="badge-text">Telamon Sword</span>
+                        </button>
+                        <button id="eeGlitch" class="ee-badge" title="1X1X1 Forsaken Matrix Glitch">
+                            <span class="badge-emoji">🟩</span>
+                            <span class="badge-text">1X1X1 Glitch</span>
+                        </button>
+                        <button id="eeSakura" class="ee-badge" title="Hujan Bunga Sakura">
+                            <span class="badge-emoji">🌸</span>
+                            <span class="badge-text">Hujan Bunga</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="greeting-footer-actions">
+                    <button id="btnReplayConfetti" class="btn btn-secondary">🎉 Mainkan Konfeti</button>
+                    <button id="btnCloseCardModal" class="btn btn-primary">💖 Terima Kasih!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 1: Login Admin (PIN Entry) -->
+    <div id="adminAuthModal" class="modal-overlay hidden">
+        <div class="modal-card auth-card">
+            <div class="modal-header">
+                <h3>🔐 Verifikasi Akses Admin</h3>
+                <button id="btnCloseAuthModal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="auth-desc">Masukkan PIN Admin 6 digit untuk membuka Panel Admin Pengaturan Ucapan Ulang Tahun:</p>
+                <form id="adminAuthForm">
+                    <div class="form-group">
+                        <input type="password" id="inputAdminPin" class="form-control pin-input" maxlength="6" placeholder="Masukkan PIN Admin" required autocomplete="off">
+                    </div>
+                    <div id="pinErrorMsg" class="error-msg hidden">⚠️ PIN Admin salah! Akses ditolak.</div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-full">Masuk Panel Admin 🔑</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Panel Admin Dashboard (Protected by 126111) -->
+    <div id="adminPanelModal" class="modal-overlay hidden">
+        <div class="modal-card admin-dashboard-card">
+            <div class="modal-header admin-header">
+                <h3>👑 PANEL ADMIN UCAPAN ULANG TAHUN</h3>
+                <button id="btnCloseAdminPanel" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="admin-status-badge">✅ Mode Admin Terverifikasi (PIN: 126111)</div>
+                
+                <form id="adminSettingsForm">
+                    <div class="form-group">
+                        <label for="adminInputName">🌸 Nama Yang Berulang Tahun (Penerima):</label>
+                        <input type="text" id="adminInputName" class="form-control" placeholder="Contoh: Amanda 💖" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adminInputMessage">💌 Teks Surat & Ucapan Doa Spesial:</label>
+                        <textarea id="adminInputMessage" class="form-control" rows="6" placeholder="Tuliskan ucapan dan doa ulang tahun spesial di sini..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adminSelectTheme">✨ Default Mode Tema Tampilan:</label>
+                        <select id="adminSelectTheme" class="form-control">
+                            <option value="theme-sakura">🌸 Soft Sakura Pink & Floral (Default)</option>
+                            <option value="theme-glitch">🟩 1X1X1 Forsaken Roblox Dark Glitch Mode</option>
+                        </select>
+                    </div>
+
+                    <div class="admin-tools-box">
+                        <p class="tools-title">🛠️ Fitur Pintas Admin:</p>
+                        <div class="tools-btn-group">
+                            <button type="button" id="btnAdminForceUnlock" class="btn btn-secondary">🎁 Buka Hadiah Langsung</button>
+                            <button type="button" id="btnAdminGenerateShareLink" class="btn btn-magic">🔗 Copy Link Kustom Ucapan</button>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="btnAdminResetDefault" class="btn btn-secondary">Kembalikan ke Default</button>
+                        <button type="submit" class="btn btn-primary">💾 Simpan & Perbarui Web 💖</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Relative Script Path for GitHub Pages -->
+    <script src="./script.js"></script>
+</body>
+</html>

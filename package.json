@@ -1,0 +1,20 @@
+{
+  "name": "birthday-forsaken-puzzle",
+  "version": "1.0.0",
+  "description": "Interactive Birthday Greetings Web App with 3x3 Puzzle, Gift Box Unlock, and Anime Shedletsky & 1X1X1 Roblox Theme",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "birthday",
+    "puzzle",
+    "roblox",
+    "shedletsky",
+    "1x1x1",
+    "anime",
+    "sakura"
+  ],
+  "author": "Antigravity AI",
+  "license": "MIT"
+}
